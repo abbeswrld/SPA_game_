@@ -2,16 +2,18 @@
 
 <template>
     <div class="board-wrapper">
+        
         <div class="board">
             <BoardItem :game-status="gameStatus" v-for="field in fields" :field="field" :key="'item-' + field.id"
                 @selectField="selectField($event)"/>
         </div>
 
-
-
             <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
-
-            <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
+            <div class="message-placeholder">
+            <p class="win" v-if="isWin">Вы молодец! Продолжайте в том же духе!</p>
+            <p class="fail" v-if="isFail">Вот не удача, Вы проиграли</p>
+            </div>
+            <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>            
     </div>
 </template>
 
@@ -37,7 +39,7 @@ export default {
 
         const { start, canStartGame } = useGamestart(init, fields, difficult, number, gameStatus)
 
-        const { selectField } = useGameprocess(fields)
+        const { selectField, isWin, isFail } = useGameprocess(fields, gameStatus, difficult, start)
 
         return {
             number,
@@ -48,6 +50,8 @@ export default {
             gameStatus,
             canStartGame,
             selectField,
+            isWin,
+            isFail,
         }
     },
 }
@@ -66,7 +70,10 @@ export default {
         margin-bottom: 100px;
     }
 
-    
+    .difficult{
+        margin: 10px 10px;
+        padding-bottom: 10px;
+    }
 
     .btn{
         background-color: #42b983cc;
@@ -86,5 +93,18 @@ export default {
 
     button:disabled{
         opacity: .5;
+    }
+
+    .win{
+        color: rgb(22, 149, 35);
+    }
+
+    .fail{
+        color: tomato;
+    }
+
+    .message-placeholder {
+        height: 20px;
+        margin-bottom: 10px;
     }
 </style>

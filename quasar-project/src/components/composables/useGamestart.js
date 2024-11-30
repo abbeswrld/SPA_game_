@@ -1,5 +1,5 @@
 
-import { FIELD, GAME_STATUS } from 'src/constants'
+import { FIELD, GAME_STATUS, GAME_SPEED } from 'src/constants'
 import { computed } from 'vue'
 
 export default function useGamestart(init, fields, difficult, number, gameStatus) {
@@ -27,7 +27,7 @@ export default function useGamestart(init, fields, difficult, number, gameStatus
         setTimeout(() => {
 
             gameStatus.value = GAME_STATUS.STARTED
-        }, 2000)
+        }, GAME_SPEED)
 
     }
 
@@ -36,7 +36,7 @@ export default function useGamestart(init, fields, difficult, number, gameStatus
     }
 
     const canStartGame = computed(() => {
-        return gameStatus.value !== GAME_STATUS.PREVIEW
+        return gameStatus.value !== GAME_STATUS.PREVIEW && gameStatus.value !== GAME_STATUS.WIN
     })
 
     return {

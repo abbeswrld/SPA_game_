@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     
-    <h1 class="h1">Remember me</h1>
+    <h1 class="h1">Echoes of the Grid</h1>
     <p>A simple game</p>
 
 
