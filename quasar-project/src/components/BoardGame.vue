@@ -2,10 +2,12 @@
 <template>
     <div class="board-wrapper">
         <div class="board">
-            <BoardItem v-for="field in fields" :field="field" :key="'item-' + field.id"/>
+            <BoardItem :preview="preview" v-for="field in fields" :field="field" :key="'item-' + field.id"/>
         </div>
-            <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
 
+           
+
+            <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
 
             <button class="btn" @click="start">Старт</button>
     </div>
@@ -27,14 +29,15 @@ export default {
 
         const { difficult, fields, init } = useGameinit(number)
 
-        const { start } = useGamestart(init, fields, difficult, number)
+        const { start, preview } = useGamestart(init, fields, difficult, number)
 
         return {
             number,
             difficult,
             fields,
             init,
-            start
+            start,
+            preview
         }
     },
 

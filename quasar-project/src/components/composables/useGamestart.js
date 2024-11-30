@@ -1,6 +1,8 @@
+import { ref } from 'vue'
 
 export default function useGamestart(init, fields, difficult, number) {
-    
+
+    let preview = ref(false)
 
     const start = () => {
         init()
@@ -8,6 +10,9 @@ export default function useGamestart(init, fields, difficult, number) {
     }
 
     const prepareGame = () => {
+
+        preview.value = true
+
         for(let i = 0; i < difficult.value; i++){
             const index = rand(0, number - 1) 
 
@@ -15,9 +20,13 @@ export default function useGamestart(init, fields, difficult, number) {
                 fields.value[index].value = 1   
             } else{
                 i--
-            }
-            
+            }    
         }
+
+        setTimeout(() => {
+            preview.value = false
+        }, 2000)
+
     }
 
     const rand = (min, max) => {
@@ -25,6 +34,7 @@ export default function useGamestart(init, fields, difficult, number) {
     }
 
     return {
-        start
+        start,
+        preview
     }
 }

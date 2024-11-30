@@ -1,16 +1,30 @@
 
 <template>
-    <div :class="['item', field.value === 1 ? 'item-active' : '']"></div>
+    <div :class="itemClass"></div>
 </template>
 
 <script>
+import { computed } from 'vue';
 export default {
+    setup(props) {
+           const itemClass = computed(() => {
+               return ['item', (props.field.value === 1 && props.preview) ? 'item-active' : ''];
+           });
+
+           return { itemClass };
+       },
+
     name: 'BoardItem',
     props:{
         field: {
             type: Object,
             required: true,
         },
+        preview: {
+            type: Boolean,
+            required: false,
+            default: false,
+        }
     },
 }
 
