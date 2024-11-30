@@ -1,22 +1,27 @@
 
+
 <template>
     <div class="board-wrapper">
         <div class="board">
-            <BoardItem :preview="preview" v-for="field in fields" :field="field" :key="'item-' + field.id"/>
+            <BoardItem :game-status="gameStatus" v-for="field in fields" :field="field" :key="'item-' + field.id"
+                @selectField="selectField($event)"/>
         </div>
 
-           
+
 
             <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
 
-            <button class="btn" @click="start">Старт</button>
+            <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import BoardItem from './BoardItem.vue'
 import useGameinit from 'src/components/composables/useGameinit.js';
 import useGamestart from 'src/components/composables/useGamestart.js';
+import useGameprocess from 'src/components/composables/useGameprocess.js';
+import { GAME_STATUS } from 'src/constants';
 
 export default {
     name: 'BoardGame',
@@ -26,10 +31,13 @@ export default {
     },
     setup(){
         const number = 25
+        const gameStatus = ref(GAME_STATUS.NONE)
 
         const { difficult, fields, init } = useGameinit(number)
 
-        const { start, preview } = useGamestart(init, fields, difficult, number)
+        const { start, canStartGame } = useGamestart(init, fields, difficult, number, gameStatus)
+
+        const { selectField } = useGameprocess(fields)
 
         return {
             number,
@@ -37,13 +45,14 @@ export default {
             fields,
             init,
             start,
-            preview
+            gameStatus,
+            canStartGame,
+            selectField,
         }
     },
-
-
 }
 </script>
+
 
 
 <style scoped>
@@ -73,5 +82,9 @@ export default {
 
     button:hover{
         background-color: #42b983;
+    }
+
+    button:disabled{
+        opacity: .5;
     }
 </style>

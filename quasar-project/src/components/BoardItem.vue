@@ -1,31 +1,51 @@
 
 <template>
-    <div :class="itemClass"></div>
+    <span :class="getBoardItemClasses" @click="select(field.id)"></span>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed } from 'vue'
+import { GAME_STATUS, FIELD } from 'src/constants'
+
 export default {
-    setup(props) {
-           const itemClass = computed(() => {
-               return ['item', (props.field.value === 1 && props.preview) ? 'item-active' : ''];
-           });
-
-           return { itemClass };
-       },
-
     name: 'BoardItem',
     props:{
         field: {
             type: Object,
             required: true,
         },
-        preview: {
-            type: Boolean,
+        gameStatus: {
+            type: Number,
             required: false,
-            default: false,
+            default: GAME_STATUS.NONE,
         }
     },
+
+    setup(props) {
+           const getBoardItemClasses = computed(() => {
+               let classes = 'item '
+
+                if (props.field.value === FIELD.FILLED && props.gameStatus === GAME_STATUS.PREVIEW || props.field.clicked){
+                    classes += 'active';
+                }
+
+                return classes
+            })
+
+            return {
+                getBoardItemClasses
+            }
+       },
+       
+       methods: {
+            select(id) {
+                if (this.gameStatus === GAME_STATUS.STARTED){
+                    this.$emit('selectField', id)
+                }
+            }
+           },
+
+    
 }
 
 
@@ -46,7 +66,7 @@ export default {
         transform-style: preserve-3d;
     }
 
-    .item-active {
+    .item.active {
         background-color: #42b983cc;
         transform: rotateX(180deg);
     }
