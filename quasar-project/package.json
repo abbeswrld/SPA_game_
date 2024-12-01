@@ -2,7 +2,7 @@
   "name": "quasar-project",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "productName": "Echoes of the Grid",
   "author": "abbeswrld <a553xxd@gmail.com>",
   "private": true,
   "scripts": {
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@electron/packager": "^18.3.6",
     "@quasar/app-vite": "^1.9.0",
+    "@types/electron": "^1.4.38",
     "@types/node": "^20.14.8",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",

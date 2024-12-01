@@ -1,4 +1,4 @@
-# Quasar App (quasar-project)
+# Echoes of the Grid (quasar-project)
 
 A Quasar Project
 

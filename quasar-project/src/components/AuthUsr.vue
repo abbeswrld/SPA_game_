@@ -136,7 +136,7 @@
     },
     async getLeaderboard() {
       try {
-        const response = await axios.get('/api/get_top/');
+        const response = await axios.get('http://localhost:8000/api/get_top/');
         this.leaderboard = response.data;
       } catch (error) {
         console.error('Ошибка загрузки таблицы лидеров:', error);
