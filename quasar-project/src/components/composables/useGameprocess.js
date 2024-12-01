@@ -1,7 +1,7 @@
 
 import { nextTick, computed } from 'vue';
 import { DEFAULT_DIFFICULT, FIELD, GAME_SPEED, GAME_STATUS } from 'src/constants';
-
+import axios from 'axios';
 
 export default function useGameprocess(fields, gameStatus, difficult, start) {
 
@@ -39,12 +39,18 @@ export default function useGameprocess(fields, gameStatus, difficult, start) {
         }
     }
 
-    const setGameOver = () => {
-        
-        gameStatus.value = GAME_STATUS.FAIL
-        difficult.value = DEFAULT_DIFFICULT 
-    }
-
+    const setGameOver = async () => {
+        gameStatus.value = GAME_STATUS.FAIL;
+        const username = localStorage.getItem('username');
+        await axios.post('http://localhost:8000/api/update_user_record/', {
+            params: {
+              username: username, 
+              record: difficult.value - 1,
+            },
+          });
+        difficult.value = DEFAULT_DIFFICULT;
+    };
+      
 
     const setWin = () => {
         gameStatus.value = GAME_STATUS.WIN

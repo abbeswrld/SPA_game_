@@ -4,8 +4,8 @@ export const FIELD = {
     
 }
 
-export const DEFAULT_DIFFICULT = 3
-export const MAX_DIFFICULT = 10
+export const DEFAULT_DIFFICULT = 1
+export const MAX_DIFFICULT = 15
 export const GAME_SPEED = 2000
 
 export const GAME_STATUS = {

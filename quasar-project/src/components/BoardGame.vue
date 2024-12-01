@@ -11,7 +11,7 @@
             <p class="fail" v-if="isFail">Вот не удача, Вы проиграли</p>
         </div>
         <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
-        <button class="btn" @click="$emit('exit')">Выйти</button>
+        <button class="btn" @click="$emit('exit')" :disabled="!canStartGame">Выйти</button>
     </div>
 </template>
 
@@ -39,6 +39,8 @@ export default {
 
         const { selectField, isWin, isFail } = useGameprocess(fields, gameStatus, difficult, start);
 
+        
+        
         return {
             number,
             difficult,

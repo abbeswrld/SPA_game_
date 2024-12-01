@@ -1,4 +1,7 @@
 import json
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+
 
 from django.contrib.auth import login, authenticate
 from rest_framework import status
@@ -41,7 +44,7 @@ def get_top_user(request):
     if request.method != 'GET':
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    users = list(User.objects.all().order_by('-record')[:10]) # Получаем топ 10 пользователей
+    users = list(User.objects.all().order_by('-record')[:10])
 
     response_body = [
         {
@@ -53,6 +56,8 @@ def get_top_user(request):
     ]
 
     return Response(response_body, status=status.HTTP_200_OK)
+
+
 
 @api_view(['GET'])
 def get_user_record(request):
@@ -72,22 +77,20 @@ def get_user_record(request):
 
 @api_view(['POST'])
 def update_user_record(request):
-    if request.method != 'POST':
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    print("Request data:", request.data)
+    username = request.data.get('params', {}).get('username')
+    record = request.data.get('params', {}).get('record')
 
-    username = request.data['params'].get('username', None)
-    if not username:
-        return Response({"message": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+    print(f"Username: {username}, Record: {record}") 
 
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    if not username or not record:
+        return JsonResponse({'message': 'Username and record are required'}, status=status.HTTP_400_BAD_REQUEST)
 
+    user = get_object_or_404(User, username=username) 
 
-    serializer = UpdateUserRecordSerializer(instance=user, data={"record": request.data['params']['record']})
-    if not serializer.is_valid():
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer = UpdateUserRecordSerializer(instance=user, data={'record': record})
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
