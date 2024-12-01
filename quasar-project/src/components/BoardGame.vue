@@ -1,25 +1,23 @@
-
-
 <template>
     <div class="board-wrapper">
-        
         <div class="board">
             <BoardItem :game-status="gameStatus" v-for="field in fields" :field="field" :key="'item-' + field.id"
                 @selectField="selectField($event)"/>
         </div>
 
-            <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
-            <div class="message-placeholder">
+        <p class="difficult">Количество клеток: <strong>{{ difficult }}</strong></p>
+        <div class="message-placeholder">
             <p class="win" v-if="isWin">Вы молодец! Продолжайте в том же духе!</p>
             <p class="fail" v-if="isFail">Вот не удача, Вы проиграли</p>
-            </div>
-            <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>            
+        </div>
+        <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
+        <button class="btn" @click="$emit('exit')">Выйти</button>
     </div>
 </template>
 
 <script>
 import { ref } from 'vue';
-import BoardItem from './BoardItem.vue'
+import BoardItem from './BoardItem.vue';
 import useGameinit from 'src/components/composables/useGameinit.js';
 import useGamestart from 'src/components/composables/useGamestart.js';
 import useGameprocess from 'src/components/composables/useGameprocess.js';
@@ -31,15 +29,15 @@ export default {
     components: {
         BoardItem,
     },
-    setup(){
-        const number = 25
-        const gameStatus = ref(GAME_STATUS.NONE)
+    setup() {
+        const number = 25;
+        const gameStatus = ref(GAME_STATUS.NONE);
 
-        const { difficult, fields, init } = useGameinit(number)
+        const { difficult, fields, init } = useGameinit(number);
 
-        const { start, canStartGame } = useGamestart(init, fields, difficult, number, gameStatus)
+        const { start, canStartGame } = useGamestart(init, fields, difficult, number, gameStatus);
 
-        const { selectField, isWin, isFail } = useGameprocess(fields, gameStatus, difficult, start)
+        const { selectField, isWin, isFail } = useGameprocess(fields, gameStatus, difficult, start);
 
         return {
             number,
@@ -52,9 +50,9 @@ export default {
             selectField,
             isWin,
             isFail,
-        }
+        };
     },
-}
+};
 </script>
 
 
