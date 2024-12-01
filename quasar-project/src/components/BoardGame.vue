@@ -10,8 +10,11 @@
             <p class="win" v-if="isWin">Вы молодец! Продолжайте в том же духе!</p>
             <p class="fail" v-if="isFail">Вот не удача, Вы проиграли</p>
         </div>
-        <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
-        <button class="btn" @click="$emit('exit')" :disabled="!canStartGame">Выйти</button>
+        <div class="btnplay">
+            <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
+            <button class="btn" @click="$emit('exit')" :disabled="!canStartGame">Выйти</button>
+        </div>
+        
     </div>
 </template>
 
@@ -85,6 +88,17 @@ export default {
         cursor: pointer;
         outline: none;
 
+    }
+    
+    
+    .btnplay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btnplay button {
+      margin-right: 10px;
     }
 
     button:hover{

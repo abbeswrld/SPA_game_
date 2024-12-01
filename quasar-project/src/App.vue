@@ -43,6 +43,10 @@ export default {
   width: 200px;
  }
 
+
+ h1{
+  font-size: 90px;
+ }
  @font-face {
     font-family: "mine";
     src: url("assets/minecraft.ttf") format("truetype");

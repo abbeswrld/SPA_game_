@@ -27,17 +27,20 @@
 
     <div v-else>
       <component :is="showGame ? 'BoardGame' : null" :game-status="gameStatus" @exit="getLeaderboard (); getUserRecord(); showLeaderboard = true; isLoggedIn = true; showGame = false" ref="gameComponent"/>
-      <div v-if="showLeaderboard">
+      <div  v-if="showLeaderboard">
         <h2>Таблица лидеров</h2>
-        <p>Ваш рекорд: {{ userRecord }}</p>
+      <div class="leaderboard">
+        <p class="record">Ваш рекорд: {{ userRecord }}</p>
+      </div>
+        
         <ul>
           <li v-for="(user, index) in leaderboard" :key="user.username">
             {{ index + 1 }}. {{ user.username }} - {{ user.record }}
           </li>
         </ul>
-        <div> 
+        <div class="btnplay"> 
           <button @click="showLeaderboard = false; showGame = true">Играть</button>
-          <button @click="logout">Выйти из аккаунта</button>
+          <button @click="logout">Выйти</button>
         </div>
         
       </div>
@@ -164,8 +167,8 @@
     box-sizing: border-box; 
     }
 
-  
-    button.login, button.register  {
+    
+    button  {
       background-color: #42b983cc;
         color: white;
         border: none;
@@ -185,10 +188,24 @@
         opacity: .5;
     }
 
+    h2{
+      font-size: 40px;
+    }
+    
     .error {
         margin-top: 23px;
         color: red;
     }
+
+    .record{
+      font-size: large;
+     
+    }
+    .leaderboard{
+      display: flex;
+      justify-content: center;
+    }
+
 
     ul{
         list-style-type: none;
@@ -198,6 +215,18 @@
         display: inline-block; 
         width: auto;
         margin: 20px auto;
+        font-size: larger;
+    }
+
+    
+    .btnplay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btnplay button {
+      margin-right: 10px;
     }
 
     li{

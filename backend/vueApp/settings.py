@@ -13,9 +13,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'user',
     'corsheaders',
-    'user'
 ]
 
 AUTH_USER_MODEL = 'user.User'
@@ -29,6 +30,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 
@@ -36,6 +38,9 @@ MIDDLEWARE = [
 
 
 ROOT_URLCONF = 'vueApp.urls'
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:9000', 'http://localhost:9300',
+]
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
@@ -50,6 +55,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:5178',
     'http://localhost:5179',
     'http://localhost:9000',
+    'http://localhost:9300',
 ]
 TEMPLATES = [
     {

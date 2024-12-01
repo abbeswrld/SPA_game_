@@ -87,7 +87,7 @@ module.exports = configure(function (/* ctx */) {
       // https: true
       proxy: {
         '/api/': {
-          target: 'http://127.0.0.1:8000/', // Или 'http://localhost:8000/' - попробуйте оба варианта
+          target: 'http://127.0.0.1:8000/', 
           changeOrigin: true,
           pathRewrite: {'^/api/': ''}
         }
